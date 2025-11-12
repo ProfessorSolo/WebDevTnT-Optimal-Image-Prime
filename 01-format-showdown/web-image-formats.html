@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Web Image Formats · Professor Solo</title>
+
+  <!-- Shared styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/reset.css" />
+  <link rel="stylesheet" href="../styles/brand.css" />
+  <link rel="stylesheet" href="../styles/layout.css" />
+</head>
+
+<body>
+  <!-- Shared glass header -->
+  <header class="site-header">
+    <div class="brandbar">
+      <div class="title">Professor Solo · WebDevTnT</div>
+      <nav aria-label="Primary">
+        <a href="#" class="active">Lesson</a>
+        <a href="#">Demos</a>
+        <a href="#">Repos</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Semantic single-container: styled by brand.css -->
+  <main class="site-main" role="main">
+    <section class="hero">
+      <h1>Web Image Formats</h1>
+      <p class="lede">Serve the right pixels to the right device. Mobile-first, shared layout, no extra wrappers.</p>
+    </section>
+
+    <!-- Native accordion: details/summary -->
+    <section aria-label="Web image formats" class="row">
+      <!-- JPG -->
+      <details open class="card">
+        <summary><strong>JPG</strong> — Joint Photographic Experts Group</summary>
+        <article>
+          <h2>.jpg (or .jpeg)</h2>
+          <img src="images/dragoncove.jpg" alt="AI generated fantasy landscape with a dragon; mountains and a lake at golden hour">
+          <p class="muted">Image generated with Adobe Firefly by Josh Solomon</p>
+          <ul>
+            <li><strong>Best for:</strong> photographs and complex scenes with subtle gradients.</li>
+            <li><strong>Why:</strong> efficient lossy compression keeps files small while maintaining visual quality.</li>
+            <li><strong>Notes:</strong> no transparency; prefer quality 70–85 and progressive encoding when possible.</li>
+          </ul>
+        </article>
+      </details>
+
+      <!-- PNG -->
+      <details class="card">
+        <summary><strong>PNG</strong> — Portable Network Graphic</summary>
+        <article>
+          <h2>PNG</h2>
+          <img src="images/solomoncraft-logo.png" alt="Solomon Craft Logo" width="400">
+          <p class="muted">Solomon Craft Logo by Josh Solomon</p>
+          <ul>
+            <li><strong>Best for:</strong> UI, logos, flat art, images that require <em>alpha transparency</em>.</li>
+            <li><strong>Why:</strong> lossless compression preserves crisp edges and text.</li>
+            <li><strong>Notes:</strong> often larger than JPEG/WebP; consider indexed PNG or use SVG for line art.</li>
+          </ul>
+        </article>
+      </details>
+
+      <!-- GIF -->
+      <details class="card">
+        <summary><strong>GIF</strong> — Graphics Interchange Format</summary>
+        <article>
+          <h2>GIF</h2>
+          <img src="images/doaninternet-imgur.gif" alt="Animated cartoon character flying with rainbows over a computer keyboard">
+          <p class="muted">Animated GIF from <a href="https://imgur.com/gallery/Qxl2Ysy">Imgur</a>.</p>
+          <ul>
+            <li><strong>Best for:</strong> tiny UI animations or retro aesthetics.</li>
+            <li><strong>Why:</strong> universal support.</li>
+            <li><strong>Notes:</strong> 256-color limit, heavy files. Prefer video (<code>mp4/webm</code>) or animated WebP/AVIF.</li>
+          </ul>
+        </article>
+      </details>
+
+      <!-- SVG (img) -->
+      <details class="card">
+        <summary><strong>SVG via &lt;img&gt;</strong></summary>
+        <article>
+          <h2>SVG via &lt;img&gt; Tag</h2>
+          <img src="images/solomoncraft-wordmark.svg" alt="Solomon Craft Wordmark">
+          <p class="muted">Solomon Craft Wordmark by Josh Solomon</p>
+          <ul>
+            <li><strong>Best for:</strong> logos, icons, diagrams.</li>
+            <li><strong>Why:</strong> vectors are resolution-independent and tiny.</li>
+            <li><strong>Notes:</strong> use inline SVG only when you need CSS/JS control of inner elements.</li>
+          </ul>
+        </article>
+      </details>
+
+      <!-- SVG (embedded) -->
+      <details class="card">
+        <summary><strong>SVG</strong> — Embedded</summary>
+        <article>
+          <h2>SVG — Embedded</h2>
+          <svg width="300" height="300" role="img" aria-label="Concentric SVG circles demo" style="display:block;max-width:100%">
+            <circle cx="150" cy="150" r="138" fill="none" stroke="currentColor" stroke-width="20" opacity="0.25" />
+            <circle cx="150" cy="150" r="129" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4" />
+            <circle cx="150" cy="150" r="149" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4" />
+          </svg>
+          <p class="muted">
+            SVG Donut modified from
+            <a href="https://codepen.io/kyledws/pen/Gvelt">Kyle Edwards — CSS/SVG Animated Circles</a>.
+          </p>
+          <ul>
+            <li><strong>Best for:</strong> styling or animating parts of the SVG with CSS/JS.</li>
+            <li><strong>Why:</strong> full DOM access to shapes and attributes.</li>
+            <li><strong>Notes:</strong> sanitize untrusted SVGs; they can contain scripts.</li>
+          </ul>
+        </article>
+      </details>
+
+      <!-- WebP -->
+      <details class="card">
+        <summary><strong>WebP</strong></summary>
+        <article>
+          <h2>WebP</h2>
+          <img src="images/dragoncove.webp" alt="AI generated dragon on transparent background">
+          <p class="muted">Image generated with Adobe Firefly by Josh Solomon</p>
+          <ul>
+            <li><strong>Best for:</strong> general-purpose images (opaque or transparent) with modern support.</li>
+            <li><strong>Why:</strong> smaller than JPEG/PNG; supports alpha and animation.</li>
+            <li><strong>Notes:</strong> great default when AVIF isn’t available.</li>
+          </ul>
+        </article>
+      </details>
+
+      <!-- AVIF -->
+      <details class="card">
+        <summary><strong>AVIF</strong></summary>
+        <article>
+          <h2>AVIF</h2>
+          <img src="images/dragoncove.avif" alt="AI generated dragon on transparent background">
+          <p class="muted">Image generated with Adobe Firefly by Josh Solomon</p>
+          <ul>
+            <li><strong>Best for:</strong> photographic content where size matters most.</li>
+            <li><strong>Why:</strong> often the smallest files with high quality; HDR capable.</li>
+            <li><strong>Notes:</strong> slower encode times; provide WebP/JPEG fallbacks for older browsers.</li>
+          </ul>
+        </article>
+      </details>
+    </section>
+  </main>
+
+  <!-- Shared sticky footer -->
+  <footer class="site-footer">
+    <span>Professor Solo · WebDevTnT</span>
+    <span class="muted">© <span data-year></span> · “p.s. keep learning.”</span>
+  </footer>
+
+  <!-- Shared UI (updates [data-year], tabs, etc.) -->
+  <script src="../scripts/ui.js" defer></script>
+</body>
+
+</html>
