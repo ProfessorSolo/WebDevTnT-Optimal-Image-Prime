@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Contain Yourself · Max-width Reset</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Fonts (same family as other demos) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- WebDevTnT shared styles -->
+  <link rel="stylesheet" href="../styles/reset.css" />
+  <link rel="stylesheet" href="../styles/brand.css" />
+
+  <!-- Lesson-specific styles -->
+  <link rel="stylesheet" href="./styles/contain-yourself.css" />
+</head>
+
+<body>
+  <!-- Shared glass header -->
+  <header class="site-header">
+    <div class="brandbar">
+      <div class="title">Professor Solo · WebDevTnT</div>
+      <nav aria-label="Primary">
+        <a href="#" class="active">Lesson</a>
+        <a href="#">Demos</a>
+        <a href="#">Repos</a>
+      </nav>
+    </div>
+  </header>
+  <main class="site-main">
+    <header class="lesson-header">
+      <p class="eyebrow">Lesson 04 · Optimal Image Prime</p>
+      <h1>Contain Yourself</h1>
+      <p class="lede">
+        One tiny CSS reset keeps your glorious hero images from blowing up
+        your layout on small screens.
+      </p>
+    </header>
+
+    <!-- Side-by-side demo: contained vs uncontained -->
+    <section class="glass contain-panel" aria-label="Max-width comparison">
+      <div class="contain-column">
+        <h2 class="column-title">Contained hero</h2>
+        <p class="column-copy">
+          This image uses the global reset:
+          <code>img { max-width: 100%; height: auto; }</code>
+        </p>
+        <div class="image-frame image-frame--contained">
+          <img src="./images/FireflySteampunkShipInAGalacticStorm65817_1792w.jpg" alt="Steampunk galleon sailing through a galactic storm" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="contain-column">
+        <h2 class="column-title">Uncontained chaos</h2>
+        <p class="column-copy">
+          Here we deliberately <strong>remove</strong> the reset so the image
+          can overflow its container. Resize the viewport and watch it misbehave.
+        </p>
+        <div class="image-frame image-frame--unbounded">
+          <img src="./images/FireflySteampunkShipInAGalacticStorm65817_1792w.jpg" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Explanation + quick notes -->
+    <section class="glass contain-notes" aria-labelledby="max-width-heading">
+      <div class="notes-text">
+        <h2 id="max-width-heading">The max-width reset</h2>
+        <p>
+          Modern responsive layouts are usually fluid—containers grow and
+          shrink with the viewport. Your images, on the other hand, ship with
+          a fixed intrinsic width. Without guard rails, they’ll happily
+          overflow their parents and introduce horizontal scrolling.
+        </p>
+        <p>So we add a tiny global rule near the top of our CSS:</p>
+        <pre class="code-block"><code>img {
+  max-width: 100%;
+  height: auto;
+}</code></pre>
+        <ul class="notes-list">
+          <li><strong>max-width: 100%</strong> stops images from growing wider than their container.</li>
+          <li><strong>height: auto</strong> preserves the original aspect ratio.</li>
+          <li>
+            Because we apply it globally (in <code>reset.css</code>), every
+            image on every page starts obedient by default.
+          </li>
+        </ul>
+      </div>
+
+      <aside class="notes-aside">
+        <h3>Try this in dev tools</h3>
+        <ol>
+          <li>Resize the viewport down to a narrow width.</li>
+          <li>
+            Toggle the <code>.image-frame--unbounded img</code> rule off and on.
+          </li>
+          <li>Watch the right panel either behave… or bust out of its box.</li>
+        </ol>
+      </aside>
+    </section>
+  </main>
+
+  <!-- Shared sticky footer -->
+  <footer class="site-footer">
+    <span>Professor Solo · WebDevTnT</span>
+    <span class="muted">© <span data-year></span> · “p.s. keep learning.”</span>
+  </footer>
+</body>
+
+</html>

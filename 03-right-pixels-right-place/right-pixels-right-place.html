@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Right Pixels, Right Place · Srcset &amp; Sizes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Shared WebDevTnT styles (one level up) -->
+  <link rel="stylesheet" href="../styles/reset.css" />
+  <link rel="stylesheet" href="../styles/brand.css" />
+  <link rel="stylesheet" href="../styles/layout.css" />
+
+  <!-- Lesson-specific styles -->
+  <link rel="stylesheet" href="./styles/right-pixels-right-place.css" />
+</head>
+
+<body>
+  <!-- Shared glass header -->
+  <header class="site-header">
+    <div class="brandbar">
+      <div class="title">Professor Solo · WebDevTnT</div>
+      <nav aria-label="Primary">
+        <a href="#" class="active">Lesson</a>
+        <a href="#">Demos</a>
+        <a href="#">Repos</a>
+      </nav>
+    </div>
+  </header>
+  <main class="site-main">
+    <header class="page-header page-header--lesson">
+      <p class="page-header__eyebrow">Lesson 04 · Optimal Image Prime</p>
+      <h1 class="page-header__title">Right Pixels, Right Place</h1>
+      <p class="page-header__lede">
+        Use <code>srcset</code> and <code>sizes</code> to serve the unicorn
+        your viewport actually needs — not the retina monster every time.
+      </p>
+    </header>
+
+    <section class="glass glass--dark srcset-demo" aria-label="Responsive unicorn banner demonstration">
+      <figure class="srcset-demo__banner">
+        <img src="./images/SteampunkUnicornInFrontOfFantasyLandscape95540-large.jpg" alt="Steampunk mechanical unicorn in front of a fantasy landscape" srcset="
+              ./images/SteampunkUnicornInFrontOfFantasyLandscape95540-small.jpg   400w,
+              ./images/SteampunkUnicornInFrontOfFantasyLandscape95540-medium.jpg  800w,
+              ./images/SteampunkUnicornInFrontOfFantasyLandscape95540-large.jpg  1200w,
+              ./images/SteampunkUnicornInFrontOfFantasyLandscape95540-retina.jpeg 1792w
+            " sizes="
+              (min-width: 1200px) 1100px,
+              (min-width: 768px) 90vw,
+              100vw
+            " loading="lazy" />
+      </figure>
+
+      <div class="srcset-demo__copy">
+        <h2>Srcset + Sizes</h2>
+        <p>
+          The browser chooses which file to download based on two things:
+          <strong>your layout</strong> (via <code>sizes</code>) and the
+          device&rsquo;s <strong>pixel density</strong>.
+        </p>
+
+        <p>
+          Our unicorn ships in four intrinsic widths:
+          <code>400w</code>, <code>800w</code>, <code>1200w</code>, and
+          <code>1792w</code> (retina).
+        </p>
+
+        <pre class="code-block"><code>&lt;img
+  src="...-large.jpg"
+  srcset="
+    ...-small.jpg   400w,
+    ...-medium.jpg  800w,
+    ...-large.jpg  1200w,
+    ...-retina.jpeg 1792w
+  "
+  sizes="
+    (min-width: 1200px) 1100px,
+    (min-width: 768px) 90vw,
+    100vw
+  "
+/&gt;</code></pre>
+
+        <div class="callout callout--tips">
+          <h3>Try this in DevTools</h3>
+          <ol>
+            <li>Open DevTools → Network → check <strong>Img</strong>.</li>
+            <li>Toggle responsive mode and resize the viewport.</li>
+            <li>
+              Switch DPR (device pixel ratio) to a high value to simulate a
+              retina display.
+            </li>
+            <li>
+              Watch which file actually downloads at each size and density.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+  <footer class="site-footer">
+    <span class="brand">Professor Solo · WebDevTnT</span>
+    <span class="tag">Lesson 04 · Right Pixels, Right Place</span>
+  </footer>
+</body>
+
+</html>

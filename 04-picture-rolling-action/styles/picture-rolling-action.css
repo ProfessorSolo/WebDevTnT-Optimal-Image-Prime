@@ -1,0 +1,84 @@
+/* ======================================================================
+   Picture Rolling Action! — <picture> demos for Lesson 04
+   Depends on reset.css + brand.css (+ layout.css)
+   ====================================================================== */
+
+.picture-demo {
+  margin-top: var(--s-3, 1.5rem);
+  padding: var(--s-3, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2, 1rem);
+}
+
+.picture-demo__title {
+  margin: 0;
+}
+
+.picture-demo__subtitle {
+  font-size: 0.95rem;
+  color: var(--brand-muted);
+}
+
+.picture-demo__lede {
+  font-size: 0.95rem;
+  max-width: 52rem;
+}
+
+.picture-demo__note {
+  font-size: 0.9rem;
+  color: var(--brand-muted);
+}
+
+/* Shared picture frame styling ---------------------------------------- */
+
+.picture-frame {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.picture-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius, 16px) - 2px);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.7);
+}
+
+.picture-frame figcaption {
+  font-size: 0.85rem;
+  color: var(--brand-muted);
+}
+
+/* Split layout for examples 2–4 --------------------------------------- */
+
+.picture-demo--split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.3fr);
+  gap: var(--s-3, 1.5rem);
+  align-items: flex-start;
+}
+
+.picture-demo__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.picture-frame--side {
+  align-self: stretch;
+}
+
+/* Responsive stacking -------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .picture-demo--split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .picture-frame--side {
+    order: -1; /* show image first on narrow screens */
+  }
+}

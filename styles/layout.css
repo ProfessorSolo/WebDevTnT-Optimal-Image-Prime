@@ -1,1 +1,22 @@
-/* reserved for future shared helpers; using brand.css for core layout */
+/* ======================================================================
+   layout.css — shared layout utilities for WebDevTnT
+   ====================================================================== */
+
+/* Generic 2-column split (content + sidebar) */
+
+.layout-split {
+  display: grid;
+  gap: var(--space-3, 1.5rem);
+}
+
+.layout-split--2-1 {
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.2fr);
+}
+
+/* Stack on narrow viewports */
+
+@media (max-width: 768px) {
+  .layout-split--stack {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

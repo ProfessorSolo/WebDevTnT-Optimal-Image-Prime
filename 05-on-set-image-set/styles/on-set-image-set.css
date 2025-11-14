@@ -1,0 +1,152 @@
+/* On Set, image-set! — page-local styling */
+
+.image-set-demo {
+  margin-top: var(--s-3, 1.5rem);
+  padding: var(--s-3, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3, 1.5rem);
+}
+
+/* Stronger text contrast on glass panels */
+.page-header__lede {
+  color: rgba(241, 245, 249, 0.96);
+  text-shadow: 0 2px 10px rgba(15, 23, 42, 0.8);
+}
+
+.image-set-demo h2 {
+  color: #f9fafb;
+  text-shadow: 0 2px 8px rgba(15, 23, 42, 0.85);
+}
+
+.image-set-demo p {
+  color: #e5e7eb;
+}
+
+.image-set-demo__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.3fr);
+  gap: var(--s-3, 1.5rem);
+  align-items: stretch;
+}
+
+.image-set-demo__body--reverse {
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.5fr);
+}
+
+.image-set-demo__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2, 1rem);
+  font-size: 0.95rem;
+}
+
+/* Hero panels -------------------------------------------------------- */
+
+.hero-panel {
+  position: relative;
+  border-radius: var(--radius, 16px);
+  overflow: hidden;
+  min-height: 240px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(15, 23, 42, 0.55);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Demo 1: DPR switching — now WebP */
+.hero-dpr {
+  background-image: image-set(
+    url('../images/CatCloseUp-1x.webp') 1x,
+    url('../images/CatExtremeCloseUp-2x.webp') 2x
+  );
+}
+
+/* Demo 2: format fallback */
+.hero-format {
+  /* Fallback for browsers without image-set() */
+  background-image: url('../images/CatCityMedium.jpg');
+
+  /* Modern: AVIF → WebP → JPEG */
+  background-image: image-set(
+    url('../images/CatCityWide.avif') type('image/avif') 1x,
+    url('../images/CatCityMedium.jpg') type('image/jpeg') 1x
+  );
+}
+
+/* Panel labels ------------------------------------------------------- */
+
+.hero-panel__label {
+  position: absolute;
+  inset: auto var(--s-2, 1rem) var(--s-2, 1rem) var(--s-2, 1rem);
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  align-items: center;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at top left,
+    rgba(255, 255, 255, 0.97),
+    rgba(241, 245, 249, 0.94)
+  );
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.6);
+  font-size: 0.8rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: #0f172a;
+  color: #f9fafb;
+}
+
+/* Notes: darker glass + more padding + clearer text ------------------ */
+
+.devtools-notes {
+  margin-top: var(--s-2, 1rem);
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.95);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.7);
+  gap: 0.75rem;
+}
+
+.devtools-notes .notes-text h3 {
+  margin-top: 0;
+  margin-bottom: 0.35rem;
+  color: #fef3c7;
+}
+
+.devtools-notes .notes-text ul {
+  margin: 0.25rem 0 0;
+  padding-left: 1.1rem;
+  color: #e5e7eb;
+}
+
+.devtools-notes .notes-aside {
+  font-size: 0.85rem;
+  color: #cbd5f5;
+  max-width: 22rem;
+}
+
+/* Responsive --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .image-set-demo__body,
+  .image-set-demo__body--reverse {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-panel {
+    min-height: 200px;
+  }
+}

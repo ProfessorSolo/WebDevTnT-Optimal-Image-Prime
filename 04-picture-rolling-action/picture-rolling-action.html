@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Picture Rolling Action! · Optimal Image Prime</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="../styles/reset.css" />
+  <link rel="stylesheet" href="../styles/brand.css" />
+  <link rel="stylesheet" href="../styles/layout.css" />
+
+  <!-- Page-specific styles -->
+  <link rel="stylesheet" href="./styles/picture-rolling-action.css" />
+</head>
+
+<body>
+  <main class="site-main">
+    <header class="page-header page-header--lesson">
+      <p class="page-header__eyebrow">Lesson 04 · Optimal Image Prime</p>
+      <h1 class="page-header__title">Picture Rolling Action!</h1>
+      <p class="page-header__lede">
+        Use the <code>&lt;picture&gt;</code> element to swap formats, crops,
+        and resolutions without changing your HTML markup or shipping
+        unnecessary pixels.
+      </p>
+    </header>
+
+    <!-- Example 1: resolution + aspect ratio -->
+    <section class="glass glass--dark picture-demo" id="example-1">
+      <h2 class="picture-demo__title">Example 1 — Resolution &amp; Aspect</h2>
+      <p class="picture-demo__lede">
+        Below 600px, we use a square crop. At wider viewports, we use a wide
+        landscape. Within each crop, <code>srcset</code> and
+        <code>sizes</code> let the browser pick the right resolution.
+      </p>
+
+      <figure class="picture-frame">
+        <picture>
+          <!-- Small screens: square crop -->
+          <source type="image/webp" media="(max-width: 599px)" srcset="
+                ./images/FireflyFuturisticCitySkyline30106_small_square.webp 600w,
+                ./images/FireflyFuturisticCitySkyline30106_retina_square.webp    1024w
+              " sizes="100vw" />
+
+          <!-- Larger screens: wide landscape -->
+          <source type="image/webp" media="(min-width: 600px)" srcset="
+                ./images/FireflyFuturisticCitySkyline30106_large.webp  1200w,
+                ./images/FireflyFuturisticCitySkyline30106_retina.jpeg 1792w
+              " sizes="
+                (min-width: 1200px) 1100px,
+                100vw
+              " />
+
+          <!-- Fallback img -->
+          <img src="./images/FireflyFuturisticCitySkyline30106_large.webp" alt="Neon futuristic city skyline at sunset" loading="lazy" />
+        </picture>
+
+        <figcaption>
+          The browser first chooses the <strong>crop</strong> via
+          <code>media</code>, then chooses the
+          <strong>resolution</strong> from that source’s
+          <code>srcset</code>.
+        </figcaption>
+      </figure>
+
+      <pre class="code-block"><code>&lt;picture&gt;
+  &lt;source
+    media="(max-width: 599px)"
+    srcset="
+      skyline-small-square.webp 600w,
+      skyline-retina-square.webp 1024w
+    "
+    sizes="100vw"
+  /&gt;
+  &lt;source
+    media="(min-width: 600px)"
+    srcset="
+      skyline-large.webp  1200w,
+      skyline-retina.jpeg 1792w
+    "
+    sizes="(min-width: 1200px) 1100px, 100vw"
+  /&gt;
+  &lt;img src="skyline-large.webp" alt="Futuristic city skyline" /&gt;
+&lt;/picture&gt;</code></pre>
+    </section>
+
+    <!-- Example 2: art direction (different picture) -->
+    <section class="glass glass--dark picture-demo--split" id="example-2">
+      <div class="picture-demo__text">
+        <h2 class="picture-demo__title">Example 2 — Art Direction</h2>
+        <p class="picture-demo__lede">
+          Same component, different story. Below 600px we show a portrait
+          close-up of the cat party. Above 600px we switch to the full wide
+          beach.
+        </p>
+        <p>
+          There’s no <code>srcset</code> here, just two sources with
+          different <code>media</code> queries and completely different
+          files.
+        </p>
+      </div>
+
+      <figure class="picture-frame picture-frame--side">
+        <picture>
+          <!-- Portrait crop for narrow screens -->
+          <source type="image/webp" media="(max-width: 599px)" srcset="./images/FireflyCrowdedBeachPartyOnAPlanetPopulatedWithKittens56499_Portrait.webp" />
+
+          <!-- Wide crop for wider screens -->
+          <source type="image/webp" media="(min-width: 600px)" srcset="./images/FireflyCrowdedBeachPartyOnAPlanetPopulatedWithKittens65817_wide.webp" />
+
+          <img src="./images/FireflyCrowdedBeachPartyOnAPlanetPopulatedWithKittens65817_wide.webp" alt="Surreal neon beach party with cats under an alien sky" loading="lazy" />
+        </picture>
+        <figcaption>
+          Below 600px, the portrait crop communicates more clearly in a tight
+          vertical slot. Above 600px, the full wide scene takes over.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- Example 3: invisible image below breakpoint -->
+    <section class="glass glass--dark picture-demo picture-demo--split" id="example-3">
+      <div class="picture-demo__text">
+        <h2 class="picture-demo__title">
+          Picture Element — Example 3<br />
+          <span class="picture-demo__subtitle">
+            No (Visible) Picture Below 600px
+          </span>
+        </h2>
+        <p>
+          This pattern behaves like “no image on small screens”, but without
+          paying for a full hidden asset.
+        </p>
+        <p>
+          On screens under 600px, the browser loads a tiny
+          <code>1×1</code> transparent PNG. On larger screens it swaps in the
+          full poker scene.
+        </p>
+        <p class="picture-demo__note">
+          You’ll need to provide a tiny file at
+          <code>images/transparent-1x1.png</code> — about as cheap as it
+          gets.
+        </p>
+      </div>
+
+      <figure class="picture-frame picture-frame--side">
+        <picture>
+          <!-- Cheap 1×1 transparent pixel on small screens -->
+          <source media="(max-width: 599px)" srcset="./images/transparent-1x1.png" />
+
+          <!-- Full art on wider screens -->
+          <source media="(min-width: 600px)" srcset="./images/FireflyFuturisticDalmatiansPlayingPoker65817.jpg" />
+
+          <img src="./images/FireflyFuturisticDalmatiansPlayingPoker65817.jpg" alt="Cyberpunk dalmatians playing poker at a neon table" loading="lazy" />
+        </picture>
+        <figcaption>
+          Use the network panel to see the difference: tiny request on
+          narrow viewports vs. the full JPEG once you cross 600px.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- Example 4: format fallback -->
+    <section class="glass glass--dark contain-notes picture-demo picture-demo--split" id="example-4">
+      <div class="picture-demo__text">
+        <h2 class="picture-demo__title">
+          Picture Element — Example 4<br />
+          <span class="picture-demo__subtitle">
+            Fallback for Older Browsers
+          </span>
+        </h2>
+        <p>
+          This example uses AVIF when supported, and falls back to JPEG when
+          the browser doesn’t understand <code>image/avif</code>.
+        </p>
+        <p>
+          Try emulating an older browser or toggling “Disable AVIF” in Dev
+          Tools (where available) to see the fallback in action.
+        <aside class="notes-aside" title="Chrome DevTools → ⋮ (More tools) → Rendering → Images → Disable AVIF image format">
+          (Tip: use DevTools Rendering to disable AVIF)
+        </aside>
+        </p>
+        <ul>
+          <li>Open DevTools (<code>⌥⌘I</code> on Mac).</li>
+          <li>Click the <strong>⋮ menu</strong> (top-right of DevTools).</li>
+          <li>Select <strong>More tools → Rendering</strong>.</li>
+          <li>Scroll to the <strong>Images</strong> section.</li>
+          <li>Enable <strong>Disable AVIF image format</strong>.</li>
+          <li>Reload the page to watch the JPEG fallback kick in.</li>
+        </ul>
+      </div>
+
+      <figure class="picture-frame picture-frame--side">
+        <picture>
+          <source srcset="images/dragoncove.avif" type="image/avif" />
+          <img class="example-04-image" src="images/dragoncove.jpg" alt="AI Generated dragon in a mystical cove" />
+        </picture>
+        <figcaption>
+          The browser will choose the <code>image/avif</code> source when it
+          can, otherwise it falls back to the JPEG.
+        </figcaption>
+      </figure>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="brand">Professor Solo · WebDevTnT</span>
+    <span class="tag">Lesson 04 · Picture Rolling Action!</span>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+/* ======================================================================
+   Lesson 04 · Right Pixels, Right Place
+   Page-specific styles — relies on reset.css, brand.css, layout.css
+   ====================================================================== */
+
+/* Make this page's main a bit wider than the default */
+.site-main--wide {
+  max-width: 1400px;
+}
+
+/* Srcset demo card ---------------------------------------- */
+
+.srcset-demo {
+  margin-top: var(--space-2, 1rem);
+  padding: var(--space-3, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 1.5rem);
+}
+
+/* Full-width banner inside the glass card */
+.srcset-demo__banner {
+  margin: 0;
+}
+
+.srcset-demo__banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius, 16px) - 2px);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.7);
+}
+
+/* Copy block under the image ------------------------------ */
+
+.srcset-demo__copy h2 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.srcset-demo__copy p {
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+}
+
+/* Tighten list spacing inside the callout */
+.srcset-demo__copy .callout ol {
+  margin-left: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.srcset-demo__copy .callout li + li {
+  margin-top: 0.25rem;
+}
+
+/* Nothing fancy responsive-wise: the image is always full-width
+   of .site-main, so you can drag from mobile → large → retina
+   and watch srcset decisions in DevTools. */

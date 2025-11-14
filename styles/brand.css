@@ -46,24 +46,25 @@
 }
 html,
 body {
-  height: 100%;
-}
-body {
   margin: 0;
-  font-family: var(--font-ui);
-  color: var(--brand-ink);
-  line-height: var(--lead);
-  min-height: 100svh;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  /* your neon background here */
   background: radial-gradient(
       1200px 600px at 50% 20%,
       rgba(255, 200, 150, 0.9) 0%,
       rgba(255, 200, 150, 0) 60%
     ),
     linear-gradient(135deg, #ff3a8a 0%, #3ad5ff 50%, #7bff7a 100%);
-
   background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
   overflow-x: hidden;
   position: relative;
   z-index: 0;
@@ -97,6 +98,7 @@ body::after {
 }
 
 /* Angled horizon grid */
+
 body::before {
   content: '';
   position: fixed;
@@ -195,9 +197,8 @@ main.site-main {
   box-shadow: 5px 25px 50px rgba(0, 0, 0, 0.15),
     inset -8px -15px 10px rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px) saturate(140%);
-  padding-bottom: calc(
-    var(--footer-h) + var(--s-2)
-  ); /* keep clear of sticky footer */
+  flex: 1 0 auto; /* 👈 this makes main stretch to fill, but grow when content is tall */
+  min-height: 0; /* avoid weird flex overflow behavior */
 }
 
 /* Content helpers */
@@ -236,13 +237,21 @@ main.site-main {
   backdrop-filter: blur(10px) saturate(140%);
 }
 
-/* Footer (sticky full width) */
+/* Darker glass for bright backgrounds */
+.glass--dark {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+}
+
 .site-footer {
-  position: sticky;
-  bottom: 0;
-  z-index: 4;
+  /* 🔑 no position: sticky/fixed/absolute */
+  position: relative;
   width: 100%;
   min-height: var(--footer-h);
+  margin-top: auto; /* flex pushes it to the bottom when content is short */
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -283,6 +292,75 @@ h3 {
   max-width: 70ch;
 }
 
+/* ======================================================================
+   Shared page header pattern (used by lesson intros, labs, etc.)
+   ====================================================================== */
+
+.page-header {
+  margin-bottom: var(--space-3, 1.5rem);
+}
+
+.page-header__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
+  color: var(--ink-subtle, #64748b);
+}
+
+.page-header__title {
+  margin-block: 0.4rem 0.25rem;
+}
+
+.page-header__lede {
+  max-width: 40rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ======================================================================
+   Code block styling (shared across demos, docs, etc.)
+   ====================================================================== */
+
+.code-block {
+  margin: 0.6rem 0 0.9rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.75rem;
+  background: rgba(15, 23, 42, 0.94);
+  color: #e5e7eb;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, 'Liberation Mono', monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
+  border: 1px solid rgba(148, 163, 184, 0.8);
+}
+
+/* ======================================================================
+   Callouts (tips, warnings, notes)
+   ====================================================================== */
+
+.callout {
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(248, 250, 252, 0.9);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
+  font-size: 0.9rem;
+}
+
+.callout h3,
+.callout h4 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.callout--tips {
+  background: rgba(15, 23, 42, 0.96); /* deep slate */
+  color: #fef3c7; /* warm sand text */
+  border-color: rgba(254, 243, 199, 0.85); /* soft amber border */
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.45);
+}
+
+/* You can add later: .callout--warn, .callout--info, etc. */
+
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -300,6 +378,10 @@ h3 {
       ),
       linear-gradient(135deg, #7b00ff 0%, #00cfff 50%, #ff007a 100%);
     color: var(--brand-ink);
+    /* 👇 bring these back so it matches light mode behavior */
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .brandbar a {
     color: #f8fafc;
@@ -325,12 +407,27 @@ h3 {
     box-shadow: 0 16px 40px -18px rgba(0, 0, 0, 0.85);
   }
   .site-footer {
+    /* 🔑 no position: sticky/fixed/absolute */
+    position: relative;
+    width: 100%;
+    min-height: var(--footer-h);
+    margin-top: auto; /* flex pushes it to the bottom when content is short */
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-2);
+    padding: 0 var(--s-4);
     background: linear-gradient(
       180deg,
-      rgba(15, 23, 42, 0.9),
-      rgba(15, 23, 42, 0.82)
+      rgba(255, 255, 255, 0.92),
+      rgba(255, 255, 255, 0.86)
     );
-    color: #e5e7eb;
+    border-top: 2px solid var(--brand-primary);
+    color: #111827;
+    backdrop-filter: blur(6px) saturate(140%);
+    font-size: 0.95rem;
+    box-shadow: 0 -8px 24px -12px rgba(0, 0, 0, 0.2);
   }
   .site-footer .muted {
     color: #9aa4b2;

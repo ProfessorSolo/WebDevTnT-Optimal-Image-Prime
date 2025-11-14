@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>On Set, image-set() · Optimal Image Prime</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="../styles/reset.css" />
+  <link rel="stylesheet" href="../styles/brand.css" />
+  <link rel="stylesheet" href="../styles/layout.css" />
+
+  <!-- Page-specific styles -->
+  <link rel="stylesheet" href="./styles/on-set-image-set.css" />
+</head>
+
+<body>
+  <!-- Shared glass header -->
+  <header class="site-header">
+    <div class="brandbar">
+      <div class="title">Professor Solo · WebDevTnT</div>
+      <nav aria-label="Primary">
+        <a href="#" class="active">Lesson</a>
+        <a href="#">Demos</a>
+        <a href="#">Repos</a>
+      </nav>
+    </div>
+  </header>
+  <main class="site-main">
+    <header class="page-header page-header--lesson">
+      <p class="page-header__eyebrow">Lesson 04 · Optimal Image Prime</p>
+      <h1 class="page-header__title">On Set, <code>image-set()</code></h1>
+      <p class="page-header__lede">
+        Give your CSS backgrounds the same powers as
+        <code>srcset</code>: let the browser pick the right file based on
+        pixel density and supported formats.
+      </p>
+    </header>
+
+    <!-- Demo 1: DPR / resolution switching -->
+    <section class="glass image-set-demo image-set-demo--dpr" id="dpr-demo">
+      <div class="image-set-demo__body">
+        <div class="image-set-demo__copy">
+          <h2>Demo 1 — Resolution by Pixel Density</h2>
+          <p>
+            This card’s background changes between a close-up and an extreme
+            close-up, depending on the device pixel ratio (1x vs 2x).
+          </p>
+          <p>
+            In production you’d usually keep the shot the same and just
+            increase the resolution. Here we exaggerate the difference so you
+            can actually <em>see</em> the switch.
+          </p>
+
+          <pre class="code-block"><code>.hero-dpr {
+  background-image: image-set(
+    url("./images/CatCloseUp-1x.jpg") 1x,
+    url("./images/CatExtremeCloseUp-2x.jpg") 2x
+  );
+}</code></pre>
+
+          <div class="glass contain-notes devtools-notes">
+            <div class="notes-text">
+              <h3>Try this in DevTools</h3>
+              <ul>
+                <li>
+                  Open DevTools → toggle the
+                  <strong>Device toolbar</strong>.
+                </li>
+                <li>
+                  Choose a device and adjust the
+                  <strong>DPR</strong> (device pixel ratio) between 1x and
+                  2x.
+                </li>
+                <li>
+                  Watch the background snap between the two shots and check
+                  <strong>Network → Img</strong> to see which file loads.
+                </li>
+              </ul>
+            </div>
+            <aside class="notes-aside">
+              <p>
+                <strong>Note:</strong> these are background images, so they
+                won’t show up as <code>&lt;img&gt;</code> elements, but you
+                will see the actual requests and file sizes.
+              </p>
+            </aside>
+          </div>
+        </div>
+
+        <div class="hero-panel hero-dpr">
+          <div class="hero-panel__label">
+            <span class="chip">CSS background</span>
+            <span>Resolution: 1x / 2x via image-set()</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo 2: format fallback -->
+    <section class="glass image-set-demo image-set-demo--formats" id="format-demo">
+      <div class="image-set-demo__body image-set-demo__body--reverse">
+        <div class="hero-panel hero-format">
+          <div class="hero-panel__label">
+            <span class="chip">CSS background</span>
+            <span>Formats: AVIF → WebP → JPEG</span>
+          </div>
+        </div>
+
+        <div class="image-set-demo__copy">
+          <h2>Demo 2 — Format Fallback in CSS</h2>
+          <p>
+            Older browsers ignore <code>image-set()</code> and just use the
+            plain <code>background-image</code>. Newer ones can choose the
+            smallest supported format.
+          </p>
+          <p>
+            Here we prefer AVIF, then WebP, then JPEG as a final fallback —
+            all using the same wide city shot.
+          </p>
+
+          <pre class="code-block"><code>.hero-format {
+  /* Fallback for browsers that don't support image-set() */
+  background-image: url("./images/CatCityMedium.jpg");
+
+  /* Modern browsers pick the first supported format */
+  background-image: image-set(
+    url("./images/CatCityWide.avif") type("image/avif") 1x,
+    url("./images/CatCityMedium.jpg")  type("image/jpeg") 1x
+  );
+}</code></pre>
+
+          <div class="glass contain-notes devtools-notes">
+            <div class="notes-text">
+              <h3>Firefox to the rescue 💅</h3>
+              <p>
+                Want to actually <em>see</em> <code>image-set()</code> fallback in action?
+                Then strut right past Chrome and Safari — they talk big, but they do
+                <strong>not</strong> disable formats in a way CSS cares about.
+                Firefox is the only browser on macOS Sequoia that plays ball.
+              </p>
+
+              <ul>
+                <li>Open the page in <strong>Firefox</strong>.</li>
+                <li>Type <code>about:config</code> in the URL bar. Yes, you're that powerful.</li>
+                <li>Search for <code>image.avif.enabled</code>.</li>
+                <li>Flip it to <strong>false</strong> — goodbye AVIF.</li>
+                <li>Reload and watch the browser fall back to JPEG like a pro.</li>
+                <li>Peek at <strong>Network → Img</strong> to admire the switch.</li>
+              </ul>
+
+              <p>
+                That's the genuine standards-compliant fallback:
+                <strong>AVIF → JPEG</strong> when AVIF isn't supported.
+              </p>
+
+              <p>
+                Chrome & Safari? They just fake it. Firefox actually commits.
+                Use the browser that means what it says.
+              </p>
+            </div>
+            <aside class="notes-aside">
+              <p>
+                <strong>Pro tip:</strong> If you're wondering why Chrome and Safari
+                refuse to fall back, it's because their “disable format” switches
+                only block decoding — they don't change what CSS thinks the browser
+                supports. So they smile, nod, and still choose the AVIF like nothing
+                happened. Firefox? Firefox actually shows up to work.
+              </p>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="brand">Professor Solo · WebDevTnT</span>
+    <span class="tag">Lesson 04 · On Set, image-set()</span>
+  </footer>
+</body>
+
+</html>
